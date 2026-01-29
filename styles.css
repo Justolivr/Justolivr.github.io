@@ -1,0 +1,316 @@
+/* styles.css
+    Modern, responsive, accessible base styles for a small site
+    GitHub Copilot
+*/
+
+/* =========================
+    Theme variables
+    ========================= */
+:root{
+  --bg: #0f1724; /* deep navy */
+  --card: #0b1220;
+  --muted: #98a0b3;
+  --text: #e6eef8;
+  --accent: #4fd1c5; /* teal */
+  --accent-2: #7c5cff; /* purple */
+  --glass: rgba(255,255,255,0.04);
+  --radius: 12px;
+  --shadow: 0 6px 22px rgba(2,6,23,0.6);
+  --max-width: 1100px;
+  --gap: 1.25rem;
+  --transition: 200ms ease;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", monospace;
+}
+
+/* Light mode fallback if user prefers light */
+@media (prefers-color-scheme: light) {
+  :root{
+     --bg: #f7fbff;
+     --card: #ffffff;
+     --muted: #6b7280;
+     --text: #0b1220;
+     --glass: rgba(10,20,40,0.02);
+     --shadow: 0 8px 30px rgba(20,30,50,0.06);
+  }
+}
+
+/* =========================
+    Reset / base
+    ========================= */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html,body{
+  height:100%;
+  margin:0;
+  background: linear-gradient(180deg,var(--bg), color-mix(in srgb, var(--bg) 85%, transparent));
+  color:var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.5;
+  -webkit-text-size-adjust:100%;
+  -ms-text-size-adjust:100%;
+}
+
+/* Typography */
+h1,h2,h3,h4,h5{ margin:0 0 0.5rem 0; font-weight:700; line-height:1.05; }
+p{ margin:0 0 1rem 0; color:var(--muted); }
+a{ color:var(--accent); text-decoration:none; transition:color var(--transition); }
+a:hover{ color:color-mix(in srgb, var(--accent) 80%, #fff 20%); }
+
+/* Utility container */
+.container{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding: clamp(1rem, 2.2vw, 2rem);
+}
+
+/* =========================
+    Header / nav
+    ========================= */
+.site-header{
+  backdrop-filter: blur(6px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  border-radius: calc(var(--radius) + 2px);
+  padding: 0.5rem;
+  margin: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.header-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--gap);
+  padding: 0.5rem 0.75rem;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+  font-weight:700;
+  color:var(--text);
+}
+.brand .logo{
+  width:42px;
+  height:42px;
+  border-radius:10px;
+  background: linear-gradient(135deg,var(--accent),var(--accent-2));
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:#08101a;
+  font-weight:800;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.35), inset 0 -6px 18px rgba(255,255,255,0.06);
+}
+
+/* Nav */
+.nav{
+  display:flex;
+  gap:0.5rem;
+  align-items:center;
+}
+.nav a{
+  padding:0.5rem 0.75rem;
+  border-radius:8px;
+  color:var(--muted);
+  font-weight:600;
+  transition: background var(--transition), color var(--transition), transform var(--transition);
+}
+.nav a:hover,
+.nav a:focus{ background:var(--glass); color:var(--text); transform:translateY(-2px); }
+
+/* CTA button in header */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:0.6rem;
+  background: linear-gradient(90deg,var(--accent), var(--accent-2));
+  color:#04111a;
+  border:none;
+  padding:0.6rem 0.9rem;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+  transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
+}
+.btn:hover{ transform:translateY(-3px); box-shadow: 0 10px 30px rgba(92,60,255,0.12); }
+
+/* =========================
+    Hero
+    ========================= */
+.hero{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:1.25rem;
+  align-items:center;
+  padding: clamp(1rem, 3vw, 2.4rem);
+  margin: 1rem;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow: var(--shadow);
+}
+.hero h1{ font-size: clamp(1.4rem, 3.8vw, 2.6rem); }
+.hero p{ font-size: clamp(0.95rem, 1.6vw, 1.05rem); color:var(--muted); max-width:60ch; }
+
+.hero-cta{
+  display:flex;
+  gap:0.75rem;
+  margin-top:0.5rem;
+}
+
+/* Hero illustration placeholder */
+.hero-visual{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:1rem;
+  border-radius:12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  min-height:140px;
+}
+
+/* =========================
+    Main layout (cards/grid)
+    ========================= */
+.grid{
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap:var(--gap);
+  margin: 1rem;
+}
+
+/* column helpers */
+.col-8{ grid-column: span 8 / span 8; }
+.col-4{ grid-column: span 4 / span 4; }
+.col-6{ grid-column: span 6 / span 6; }
+.col-12{ grid-column: 1 / -1; }
+
+/* Card */
+.card{
+  padding:1.05rem;
+  border-radius: calc(var(--radius) - 2px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.card:hover{ transform: translateY(-6px); box-shadow: 0 18px 50px rgba(2,6,23,0.7); }
+
+/* Card header */
+.card h3{ margin-bottom:0.35rem; font-size:1.05rem; }
+.meta{ color:var(--muted); font-size:0.9rem; }
+
+/* List / items */
+.list{
+  display:flex;
+  flex-direction:column;
+  gap:0.6rem;
+}
+.item{
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+  padding:0.5rem;
+  border-radius:8px;
+  transition:background var(--transition), transform var(--transition);
+}
+.item:hover{ background:var(--glass); transform:translateY(-3px); }
+.item .icon{
+  width:44px; height:44px; border-radius:10px;
+  display:inline-grid; place-items:center;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent);
+  color:var(--accent);
+  font-weight:700;
+}
+
+/* =========================
+    Forms & inputs
+    ========================= */
+.input, textarea, select{
+  width:100%;
+  padding:0.65rem 0.8rem;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.04);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  color:var(--text);
+  outline:none;
+  transition: box-shadow var(--transition), border-color var(--transition);
+  font-size:0.95rem;
+}
+.input:focus, textarea:focus{
+  box-shadow: 0 8px 30px rgba(79,209,197,0.07);
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+/* Buttons - variants */
+.btn-muted{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.06);
+  color:var(--text);
+  padding:0.5rem 0.75rem;
+  border-radius:10px;
+}
+.btn-ghost{ background:transparent; color:var(--accent); border:none; }
+
+/* =========================
+    Footer
+    ========================= */
+.site-footer{
+  margin: 1.5rem;
+  padding: 1rem;
+  border-radius:12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  color:var(--muted);
+  text-align:center;
+}
+
+/* =========================
+    Responsive tweaks
+    ========================= */
+@media (max-width:900px){
+  .grid{ grid-template-columns: repeat(6, 1fr); }
+  .col-8{ grid-column: span 6; }
+  .col-4{ grid-column: span 6; }
+  .hero{ grid-template-columns: 1fr; }
+  .brand .logo{ width:36px; height:36px; }
+}
+
+@media (max-width:600px){
+  .grid{ grid-template-columns: repeat(4,1fr); gap:0.75rem; }
+  .container{ padding:0.75rem; }
+  .nav{ display:none; }
+  .site-header{ margin:0.6rem; }
+}
+
+/* =========================
+    Small helpers
+    ========================= */
+.kbd{
+  font-family: var(--mono);
+  padding:0.2rem 0.45rem;
+  border-radius:6px;
+  background:rgba(255,255,255,0.02);
+  color:var(--text);
+  border:1px solid rgba(255,255,255,0.03);
+  font-size:0.82rem;
+  display:inline-block;
+}
+
+/* Accessibility focus */
+:focus{
+  outline: 3px solid color-mix(in srgb, var(--accent) 18%, transparent);
+  outline-offset:3px;
+  border-radius:6px;
+}
+
+/* Tiny animation */
+.fade-in{
+  animation: fadeIn 420ms both ease;
+}
+@keyframes fadeIn{
+  from{ opacity:0; transform: translateY(6px); }
+  to{ opacity:1; transform: translateY(0); }
+}
